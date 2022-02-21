@@ -15,13 +15,13 @@
 		</div>
 		<div class="d-flex justify-content-around py-3">
 			<div class="score">
-				<h5>20 Points</h5>
+				<h5>{{points}} Points</h5>
 			</div>
 			<div class="question-remain">
-				<span style="font-style: italic">Question 1 of 9</span>
+				<span style="font-style: italic">Question {{currentQuestion+1}} of {{questionList.length}}</span>
 			</div>
 			<div class="timer">
-				<h5>60 Sec ⏰</h5>
+				<h5>{{counter}} Sec ⏰</h5>
 			</div>
 		</div>
 		<div class="progress mb-3">
@@ -36,41 +36,26 @@
 		</div>
 		<div class="question">
 			<div class="card">
-				<h3>What is your name?</h3>
+				<h3>{{ questionList[currentQuestion]?.questionText }}</h3>
 			</div>
 		</div>
 		<div class="option">
-			<ol>
+			<ol *ngFor="let option of questionList[currentQuestion]?.options">
 				<li>
 					<div class="card">
-						Vishal	
-					</div>
-				</li>
-				<li>
-					<div class="card">
-						Maddy
-					</div>
-				</li>
-				<li>
-					<div class="card">
-						Paddy
-					</div>
-				</li>
-				<li>
-					<div class="card">
-						Saddy
+						{{option.text}}
 					</div>
 				</li>
 			</ol>
 		</div>
 		<div class="d-flex justify-content-between">
-			<button class="btn">
+			<button class="btn" (click)="previousQuestion()" [disabled]="currentQuestion===0">
 				<i class="fa text-primary fa-chevron-left fa-3x" aria-hidden="true"></i>
 			</button>
 			<button class="btn">
 				<i class="fa text-primary fa-refresh fa-3x" aria-hidden="true"></i>
 			</button>
-			<button class="btn">
+			<button class="btn" (click)="nextQuestion()">
 				<i class="fa text-primary fa-chevron-right fa-3x" aria-hidden="true"></i>
 			</button>
 		</div>
