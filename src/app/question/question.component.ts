@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-question',
-  templateUrl: './question.component.html',
-  styleUrls: ['./question.component.scss']
+	selector: 'app-question',
+	templateUrl: './question.component.html',
+	styleUrls: ['./question.component.scss'],
 })
 export class QuestionComponent implements OnInit {
+	public name: string = '';
+	constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+	ngOnInit(): void {
+		this.name = localStorage.getItem("name")!;
+	}
 }
