@@ -17,6 +17,7 @@ export class QuestionComponent implements OnInit {
 	inCorrectAnswer: number = 0;
 	interval$: any;
 	progress: string = '0';
+	isQuizCompleted: Boolean = false;
 	constructor(private questionService: QuestionService) {}
 	ngOnInit(): void {
 		this.name = localStorage.getItem("name")!;
@@ -35,15 +36,27 @@ export class QuestionComponent implements OnInit {
 		this.currentQuestion--;
 	}
 	answer(currentQno: number, option: any) {
+		if(currentQno === this.questionList.length) {
+			this.isQuizCompleted = true;
+			this.stopCounter();
+		}
 		if(option.correct) {
 			this.points += 10;
-			this.getProgressPercent();
 			this.correctAnswer++;
-			this.currentQuestion++;
+			setTimeout(() => {
+				this.currentQuestion++;
+				this.resetCounter();
+				this.getProgressPercent();
+			}, 1000);
+			
 		} else {
+			setTimeout(() => {
+				this.currentQuestion++;
+				this.inCorrectAnswer++;
+				this.resetCounter();
+				this.getProgressPercent();
+			}, 1000)
 			this.points = this.points - 10;
-			this.currentQuestion++;
-			this.inCorrectAnswer++;
 		}
 	}
 	startCounter(){
@@ -75,6 +88,7 @@ export class QuestionComponent implements OnInit {
 		this.points = 0;
 		this.counter = 60;
 		this.currentQuestion = 0;
+		this.progress = '0';
 	}
 	getProgressPercent(){
 		this.progress = ((this.currentQuestion/this.questionList.length) * 100).toString();
