@@ -28,7 +28,7 @@
 			<div
 				class="progress-bar progress-bar-striped bg-success"
 				role="progressbar"
-				style="width: 25%"
+				[ngStyle]="{'width':progress+'%'}"
 				aria-valuenow="25"
 				aria-valuemin="0"
 				aria-valuemax="100"
@@ -41,7 +41,7 @@
 		</div>
 		<div class="option">
 			<ol *ngFor="let option of questionList[currentQuestion]?.options">
-				<li>
+				<li (click)="answer(currentQuestion+1, option)">
 					<div class="card">
 						{{option.text}}
 					</div>
@@ -52,7 +52,7 @@
 			<button class="btn" (click)="previousQuestion()" [disabled]="currentQuestion===0">
 				<i class="fa text-primary fa-chevron-left fa-3x" aria-hidden="true"></i>
 			</button>
-			<button class="btn">
+			<button class="btn" (click)="resetQuiz()">
 				<i class="fa text-primary fa-refresh fa-3x" aria-hidden="true"></i>
 			</button>
 			<button class="btn" (click)="nextQuestion()">
